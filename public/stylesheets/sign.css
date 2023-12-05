@@ -10,7 +10,7 @@ body {
 }
 
 .container {
-    width: 300px;
+    width: 500px;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -47,6 +47,8 @@ input:focus {
 }
 
 button {
+    width: 250px;
+    margin: auto;
     padding: 10px;
     background-color: #6b95a5f7;
     color: #fff;
