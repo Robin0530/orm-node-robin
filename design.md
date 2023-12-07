@@ -115,3 +115,17 @@ ssl환경이면 보다 더 안전하게 통신이 가능하다.
 * 비동기(Async)란 : 여러 작업을 처리함에 있어 병렬적으로 동시에 처리 가능한 방식<br>
 여러 작업을 동시에 병렬로 처리하며, 콜백함수와 콜백지옥 대신 자바스크립트에서는 Promise, Async/Await 비동기 구현<br>
 처리에 우선순위 없음<br>
+
+---
+
+* URL (인터넷주소체계 또는 주소/링크주소)<br>
+* URL을 통해 GET 방식으로 서버에 데이터를 전달하는 방법 2가지<br>
+
+* case1) 쿼리스트링방식(QueryString)으로 주소를 통해 서버로 데이터를 전달하자<br>
+기본링크주소?key=value&key=value&key=value<br>
+http://shop.naver.com/product?pid=1&price=500&stock=5;<br>
+
+* case2) 파라메터방식으로 URL주소안에다가 직접 데이터를 넣어서 주소체계를 만들어 데이터를 전달하는 방식<br>
+http://shop.naver.com/product/10000 <br>
+http://shop.naver.com/catrgory/100/product/10000 <br>
+http://shop.naver.com/blogs/1 <br>
