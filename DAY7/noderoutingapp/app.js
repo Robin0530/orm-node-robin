@@ -31,6 +31,7 @@ app.use('/users', usersRouter);
 // auth라우터 파일의 기본호출 주소체계정의
 // auth.js 라우터의 모든 라우팅메소드는 http://localhost:3000/auth/~
 app.use('/auth', authRouter);
+// member.js 라우터의 기본주소 체계를 정의한다.
 app.use('/member', memberRouter);
 
 
