@@ -4,6 +4,7 @@
 * 기존 변수선언 방식 var를 대체하는 새로운 변수 선언 방식제공 let 제공
 * var 변수선언방식은 블록스코프 개념이 없어서 특정 블록안에서 선언된 변수값을 블록범위 밖에서 언제든지 변경이 가능해서 문제를 초래함.
 * 블록스코프 내에서 선언된 let, const 값은 그 안에서만 사용 및 변경이 가능하다.
+  <!-- 기존  -->
 
 ### var, let, const 차이점<br>
 1. 중복 선언 가능 여부
@@ -52,6 +53,40 @@ baseDelyFee = 13000;
 console.log("기본배송비2:", baseDelyFee);
 ```
 
+**2015년도 자바스크립트 신규문법으로 추가된 상수**
+```javascript
+const newBaseDelyFee = 5000;
+console.log("상수로 표현하는 기본 배송비:", newBaseDelyFee);
+
+// 상수로 선언된 배송비 값을 변경해보자.
+// 상수값을 변경하려해서 에러 발생!!!
+// newBaseDelyFee = 10000;
+
+// 총 결제금액 초기값 할당
+// let으로 선언된 변수는 초기할당이후 변수값 변경이 가능하다 = var
+let totalPayPrice = 0;
+
+console.log("총결제 금액:", totalPayPrice, "/ 상수기본 배송비:", newBaseDelyFee);
+
+// let으로 선언된 변수값을 변경해보자
+totalPayPrice= 1;
+console.log("총결제 금액:",totalPayPrice);
+
+// var 변수선언방식은 블록스코프 개념이 없어서
+// 특정 블록안에서 선언된 변수값을 블록범위 밖에서 언제든지 변경이 가능했다.
+// 이런 var 변수선언방식은 다양한 문제를 초래했다.
+
+// 총 결제금액에 기본배송비를 추가함
+// totalPayPrice = totalPayPrice + baseDelyFee;
+totalPayPrice += baseDelyFee;
+
+// 총 결제금액에 기본 상품가격을 추가함
+totalPayPrice += price;
+
+console.log("총 결제 금액 :",totalPayPrice)
+```
+
+
 <br><br>
 
 ## 2. 템플릿 문자열 문법 사용법
@@ -80,6 +115,9 @@ var str = "저는 " + (a+b) + "살이고 " + c + "를 배우고 있습니다.";
 console.log(str)    // 저는33살이고 자바스크립트를 배우고 있습니다.
 ```
 <br>
+
+전통적인 방식의 문자열과 변수값의 조합방식
+가독성이 떨어지고 코딩하는데 정신이 없다.
 
 ***템플릿 리터럴에서는 아래와 같이 $와 중괄호{}를 사용하여 표현식을 표기할 수 있습니다.**
 ```javascript

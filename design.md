@@ -124,8 +124,40 @@ ssl환경이면 보다 더 안전하게 통신이 가능하다.
 * case1) 쿼리스트링방식(QueryString)으로 주소를 통해 서버로 데이터를 전달하자<br>
 기본링크주소?key=value&key=value&key=value<br>
 http://shop.naver.com/product?pid=1&price=500&stock=5;<br>
+== 물음표 (key=value) pid 값 추출하거나 price 값 추출하거나 stock 값 추출하기
 
 * case2) 파라메터방식으로 URL주소안에다가 직접 데이터를 넣어서 주소체계를 만들어 데이터를 전달하는 방식<br>
+* 파라메터 방식으로 URL주소체계를 구성하는것을 매우 중요..!!
+* 검색엔진 최적화 (SEO = Search Engine Optimization)
+
+<br>
 http://shop.naver.com/product/10000 <br>
 http://shop.naver.com/catrgory/100/product/10000 <br>
 http://shop.naver.com/blogs/1 <br>
+
+## 4. 
+
+* 주소체계도 같고 get 방식도 같음
+
+GET: 와일드카드방식
+localhost:3000/product/detail/1
+
+GET: 일반방식
+localhost:3000/product/detail/sample
+
+## 5. 서버응답 HttpResponse 객체 다루기
+* 사용자 요청에 대한 서버에서 처리한 응답에 대한 결과정보(웹페이지, JSON정보, 에러정보, 처리결과정보)를 제어한다.
+
+* res.render('뷰파일경로', 뷰파일에 전달할 JSON 데이터);
+  - 뷰파일의 내용을 최종 웹브라우저로 전달하거나 뷰파일 호출시 뷰파일에 JSON 데이터를 전달해 뷰파일 안에서 데이터 기반 HTML 내용을 제어할 수 있게 한다.
+* res.json(json데이터);
+  - 웹 브라우저 JSON epdlxj vhaotdmfh tnstn epdlxjaks wjsthdgksms apthem
+* res.redirect(바로 이용할 url 주소경로)
+
+* res.send()
+  - 일반적으로 많이 안씀 (만능이지만 일관성없음)
+
+## 2. 미들웨어 개념 이해와 활용
+### 1. 미들웨어란
+* 노드에서 미들웨어 개념은 주로 사용자 요청과 응답 라우팅 과정에서 전체 라우팅 프로세스에 개입하여
+특정 기능을 수행 후 응답 프로세스가 진행될 수 있게 라우팅 프로세스를 프로그래밍적으로 제어하는 방법 또는 환경을 말한다.
