@@ -8,6 +8,8 @@ var session = require('express-session');
 var indexRouter = require('./routes/index');
 var articlesRouter = require('./routes/articles');
 var memberRouter = require('./routes/member');
+var channelRouter = require('./routes/channel');
+var messageRouter = require('./routes/message');
 
 var app = express();
 
@@ -25,6 +27,8 @@ app.use(express.static(__dirname + '/views/src/assets'));
 app.use('/', indexRouter);
 app.use('/articles', articlesRouter);
 app.use('/member', memberRouter);
+app.use('/channel', channelRouter);
+app.use('/message', messageRouter);
 
 app.use(session({
   secret: 'lee',  
