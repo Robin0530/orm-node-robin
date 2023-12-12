@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>채팅 메시지 이력 생성</title>
+    </head>
+    <body>
+        <h1>채팅 메시지 이력 생성</h1>
+
+        <form action="/message/create" method="post">
+        
+            채팅방명<input type="text" name="title"/> <br>
+            내용<textarea name="contents" rows="20" cols="10" style="width: 70%;"></textarea><br>
+            작성자<input type="text" name="register"/> <br>
+            <input type="submit" value="저장"><br>
+            <a href="/message/list">채팅메시지 목록 이동</a>
+            
+        </form>
+
+    </body>
+</html>
