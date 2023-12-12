@@ -10,6 +10,7 @@ var articlesRouter = require('./routes/articles');
 var memberRouter = require('./routes/member');
 var channelRouter = require('./routes/channel');
 var messageRouter = require('./routes/message');
+var adminRouter = require('./routes/admin');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use('/articles', articlesRouter);
 app.use('/member', memberRouter);
 app.use('/channel', channelRouter);
 app.use('/message', messageRouter);
+app.use('/admin', adminRouter);
 
 app.use(session({
   secret: 'lee',  
