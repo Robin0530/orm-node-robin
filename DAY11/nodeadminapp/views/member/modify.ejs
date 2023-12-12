@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>사용자 계정정보 수정/삭제</title>
+    </head>
+    <body>
+        <h1>사용자 계정정보 수정/삭제</h1>
+        <form action="/member/modify/" method="post">
+            사용자명 <input type="text" name="memberName" id="memberName" value=""><br>
+            연락처 <input type="tel" name="memberPhone" id="memberPhone" value=""><br>
+            주소 <input type="text" name="memberAddress" id="memberAddress" value=""><br>
+            <input type="submit" value="수정"><br/>
+            <a href="/member/delete">삭제</a>
+            <a href="/member/list">게시글 목록 이동</a>
+        </form>
+    </body>
+</html>

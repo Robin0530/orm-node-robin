@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>채팅방 확인 및 수정/삭제</title>
+    </head>
+    <body>
+        <h1>채팅방 확인 및 수정/삭제</h1>
+
+        <form action="/channel/modify" method="post">
+            제목<input type="text" name="title" value=""><br>
+            내용<textarea name="contents" rows="20" cols="10" style="width: 70%;"></textarea><br>
+            등록자<input type="text" name="register" value=""><br>
+            <input type="submit" value="수정"><br>
+            <button>
+                <a href="/channel/delete">삭제</a>
+            </button>
+            <a href="/channel/list">채널 목록 이동</a>
+        </form>
+    </body>
+</html>
