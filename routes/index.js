@@ -1,13 +1,33 @@
 var express = require('express');
-var path = require('path');
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
-  res.sendFile(path.join(__dirname, '../public/src/html/index.html'));
+router.get('/', function(req, res) {
+  const isLoggedIn = req.session && req.session.isLoggedIn;
+  res.render('index', { 
+    isLoggedIn: isLoggedIn 
+  });
 });
 
-router.get('/sign', function(req, res, next) {
-  res.render('sign');
+router.get('/login', async(req, res)=>{
+  res.render('login');
 });
+
+router.post('/login', async(req, res)=>{
+  var id = req.body.id; 
+  var password = req.body.password;
+  isValidUser = true; 
+  console.log(isValidUser);
+  if (isValidUser) { 
+    res.redirect('/'); 
+  } else {
+    res.render('login', { error: 'Invalid credentials' });
+  }
+});
+
+router.get('/logout', (req, res) => {
+  req.session.isLoggedIn = false; 
+  res.redirect('/login');
+});
+
 
 module.exports = router;
