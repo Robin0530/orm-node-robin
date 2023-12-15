@@ -119,25 +119,25 @@
                                 <div class="form-group">
                                     <label class="control-label" for="OrderNo">게시판</label>
                                     <select name="boardTypeCode" id="boardTypeCode" class="form-control">
-                                        <option value="0" <% if( searchOption.boardTypeCode == "0"){ %> selected <% } %> >전체</option>
-                                        <option value="1" <% if( searchOption.boardTypeCode == "1"){ %> selected <% } %> >공지게시판</option>
-                                        <option value="2" <% if( searchOption.boardTypeCode == "2"){ %> selected <% } %> >기술블로깅</option>
+                                        <option value="0">전체</option>
+                                        <option value="1">공지게시판</option>
+                                        <option value="2">기술블로깅</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label class="control-label" for="OrderName">제목</label>
-                                    <input type="text" name="title" value="<%=searchOption.title%>" class="form-control">
+                                    <input type="text" name="title" class="form-control">
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label class="control-label" for="MobileNo">게시여부</label>
                                     <select name="isDisplayCode" class="form-control">
-                                        <option value="9" <% if( searchOption.isDisplayCode == "9"){ %> selected <% } %> >전체</option>
-                                        <option value="1" <% if( searchOption.isDisplayCode == "1"){ %> selected <% } %> >게시함</option>
-                                        <option value="0" <% if( searchOption.isDisplayCode == "0"){ %> selected <% } %> >게시안함</option>
+                                        <option value="9">전체</option>
+                                        <option value="1">게시함</option>
+                                        <option value="0">게시안함</option>
                                     </select>
                                 </div>
                             </div>
@@ -171,36 +171,17 @@
                                                 <th width="10%">등록일자</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="hoverTblBody">
+                                        <tbody class="hoverTblBody" id="list">
 
-                                            <% for(var i =0;i<articles.length;i++){ %>
-                                                <tr>
-                                                    <td><%=articles[i].article_id%></td>
-                                                    <td>
-                                                        <% if(articles[i].board_type_code == 1){%>
-                                                            공지게시판
-                                                        <% } else{ %>
-                                                            기술블로깅
-                                                        <% }%>
-
-                                                    </td>
-
-                                                    <td><a href="/article/modify/<%=articles[i].title%>"><%=articles[i].title%></a></td>
-                                                    <td><%=articles[i].view_count%></td>
-                                                    <td><%=articles[i].ip_address%></td>
-
-                                                    <td>
-                                                        <% if(articles[i].is_display_code == 1){%>
-                                                            게시함
-                                                        <% } else{ %>
-                                                            게시안함
-                                                        <% }%>
-                                                    </td>
-
-                                                    <td><%=articles[i].reg_date%></td>
-                                                </tr>
-
-                                            <% } %>
+                                            <!-- <tr>
+                                                <td>1</td>
+                                                <td>공지게시판</td>
+                                                <td><a href="/article/modify/1">제목입니다.</a></td>
+                                                <td>10</td>
+                                                <td>111.222.111.111</td>
+                                                <td>게시안함</td>
+                                                <td>2023-12-15</td>
+                                            </tr> -->
 
                                         </tbody>
                                     </table>
@@ -245,17 +226,77 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 
+    <!-- Jquery Ajax 기반으로 프론트엔드 기능 구현하는 프로느엔드 개발영역 -->
+    <!-- <script>
+
+        // list.html웹페이지가 서버에서 브라우저로 완전 렌더링 완료된 시점에서 
+        // 백엔드 REST API 서비스를 통해 전체 게시글 목록 순수 데이터를 조회해온다.
+        $(document).ready(function() {
+
+            // step1: 백엔드 RESTful API 서비스에서 전체 게시글 목록 데이터를 조회해온다.
+            // Jquery Ajax get 메소드를 통해 get방식으로 restful api 라우팅 메소드를 호출한다.
+            $.get('http://localhost:3000/api/article/all'), function(result) {
+                console.log("백엔드에서 전달된 조회결과 확인:", result);
+                
+                // $.each(result.data, (i, item)=> {
+                $.each(result.data, function(i, item) {
+                    console.log("배열내 단일 데이터 출력:", item);
+
+
+                    var trTag = `
+                        <tr>
+                            <td>1</td>
+                            <td>공지게시판</td>
+                            <td><a href="/article/modify/1">제목입니다.</a></td>
+                            <td>10</td>
+                            <td>111.222.111.111</td>
+                            <td>게시안함</td>
+                            <td>2023-12-15</td>
+                        </tr>
+                    `;
+
+                    $("#list").append();
+
+                });
+            };
+        });
+
+    </script> -->
+
+    <!-- Jquery Ajax 기반으로 프론트엔드 기능 구현하는 프로느엔드 개발영역 -->
     <script>
-    // 순수 자바스크립트 사용시 document.getElementById("searchForm")
-    // 해당하는 요소에 submit 이벤트가 발생하면 콜백(익명)함수를 실행시켜라
-    // 조회폼 입력 유효성 검사
-    $("#searchForm").submit(function () {
+        // list.html웹페이지가 서버에서 브라우저로 완전 렌더링 완료된 시점에서 
+        // 백엔드 REST API 서비스를 통해 전체 게시글 목록 순수 데이터를 조회해온다.
+        $(document).ready(function() {
+            // step1: 백엔드 RESTful API 서비스에서 전체 게시글 목록 데이터를 조회해온다.
+            // Jquery Ajax get 메소드를 통해 get방식으로 restful api 라우팅 메소드를 호출한다.
+            $.get('http://localhost:3000/api/article/all', function(result) {
+                console.log("백엔드에서 전달된 조회결과 확인:", result);
 
+                // 게시글 목록 데이터를 가져온 후에 처리하는 부분을 아래와 같이 수정
+                $.each(result.data, function(i, item) {
+                    console.log("배열내 단일 데이터 출력:", item);
 
-        return true;
-    });
+                    // 실제 데이터를 기반으로 동적으로 테이블 행(trTag)을 생성
+                    var trTag = `
+                        <tr>
+                            <td>${item.article_id}</td>
+                            <td>${item.board_type_code}</td>
+                            <td><a href="/article/modify/1">${item.title}</a></td>
+                            <td>10</td>
+                            <td>111.222.111.111</td>
+                            <td>게시안함</td>
+                            <td>${item.reg_date}</td>
+                        </tr>
+                    `;
 
+                    // 생성한 trTag를 테이블의 tbody에 추가
+                    $("#list").append(trTag);
+                });
+            });
+        });
     </script>
+
 
 
 </body>
