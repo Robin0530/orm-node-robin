@@ -1,110 +1,75 @@
-// 사용자 계정 정보 관리 라우팅 기능
-
-// 라우터의 기본주소는
-// http://localhost:3001/member/~
+// 사용자 계정 정보(사용자 사이트에서 가입한 사용자 정보) 관리 라우팅 기능
+// http://localhost:3000/member/~
 
 var express = require('express');
-const path = require('path');
-const fs = require('fs').promises;
 var router = express.Router();
 
-const DB_path = path.join(__dirname, '../DB/memberDB.json');
 
+router.get('/list', async(req, res, next)=>{
 
-router.get('/list', async(req, res, next) => {
-    try {
-        const data = await fs.readFile(DB_path, 'utf8');
-        const members = JSON.parse(data).users;
-        res.render('member/list', { members });
-    } catch (err) {
-        console.error("Error reading the file:", err);
-        res.status(500).send("Error reading the user data.");
-    }
+  const members = {
+    member_id:1,
+    email:'eb@gmail.com',
+    member_password:1,
+    name:'eunbi',
+    profile_img_path:'image/1',
+    telephone:'12345',
+    entry_type_code:1,
+    use_state_code:1,
+    birth_date:'2000.10.20',
+    reg_date:'2023.12.19',
+    reg_member_id:1,
+    edit_date:'2023.12.19',
+    edit_member_id:1
+  }
+  res.render('member/list.ejs', {members});
 });
 
 router.get('/create', async(req, res)=>{
-    res.render('member/create')
+
+  res.render('member/create.ejs')
 })
 
-router.post('/create', async (req, res) => {
-    const { username, email } = req.body;
-    try {
-        const data = await fs.readFile(DB_path, 'utf8');
-        const db = JSON.parse(data);
+// 목록페이지 이동처리
+router.post('/create', async(req, res)=>{
 
-        const userExists = db.users.some(user => user.username === username || user.email === email);
-        if (userExists) {
-            return res.render('member/create', { error: "Username or Email already exists." });
-        }
-        password = "0000"
-        const newMember = { id: whatIsNextId(db.users), password, username, email };
-        db.users.push(newMember);
+  res.redirect('/member/list')
+})
 
-        await fs.writeFile(DB_path, JSON.stringify(db, null, 2), 'utf8');
-        res.redirect('/member/list');
-    } catch (err) {
-        res.status(500).send("Error processing the request.");
-    }
-});
+router.get('/modify/:id', async(req, res)=>{
 
+  var memberId = req.params.id;
 
-function whatIsNextId(users) {
-    if (users.length === 0) {
-        return 1;
-    }
-    return Math.max(...users.map(user => user.id)) + 1;
-}
+  const members = {
+    member_id:memberId,
+    email:'eb@gmail.com',
+    member_password:1,
+    name:'eunbi',
+    profile_img_path:'image/1',
+    telephone:'12345',
+    entry_type_code:1,
+    use_state_code:1,
+    birth_date:'2000.10.20',
+    reg_date:'2023.12.19',
+    reg_member_id:1,
+    edit_date:'2023.12.19',
+    edit_member_id:1
+  }
 
-router.get('/modify/:mid', async (req, res) => {
-    var memberIdx = req.params.mid;
-    try {
-        const data = await fs.readFile(DB_path, 'utf8');
-        const members = JSON.parse(data).users;
-        const member = members.find(m => m.id == memberIdx);
+  res.render('member/modify.ejs', {members})
+})
 
-        if (member) {
-            res.render('member/modify', { member });
-        } else {
-            res.status(404).send("Member not found");
-        }
-    } catch (err) {
-        console.error("Error reading the file:", err);
-        res.status(500).send("Error reading the user data.");
-    }
-});
+// 목록페이지 이동처리
+router.post('/modify/:id', async(req, res)=>{
+  var memberId = req.params.id;
 
-router.post('/modify', async (req, res) => {
-    const { id, username, email } = req.body;
-    try {
-        const data = await fs.readFile(DB_path, 'utf8');
-        const db = JSON.parse(data);
-        const memberIndex = db.users.findIndex(m => m.id == id);
-        if (memberIndex !== -1) {
-            db.users[memberIndex].username = username;
-            db.users[memberIndex].email = email;
-            await fs.writeFile(DB_path, JSON.stringify(db, null, 2), 'utf8');
-            res.redirect('/member/list');
-        } else {
-            res.status(404).send("Member not found");
-        }
-    } catch (err) {
-        res.status(500).send("Error processing the update.");
-    }
-});
+  res.redirect('/member/list')
+})
 
-router.post('/delete/:mid', async (req, res) => {
-    const memberId = req.params.mid;
+// 목록페이지 이동처리
+router.get('/delete', async(req, res)=>{
+  res.redirect('/member/list')
+})
 
-    try {
-        const data = await fs.readFile(DB_path, 'utf8');
-        const db = JSON.parse(data);
-        db.users = db.users.filter(user => user.id != memberId);
-        await fs.writeFile(DB_path, JSON.stringify(db, null, 2), 'utf8');
-        res.redirect('/member/list');
-    } catch (err) {
-        console.error("Error processing the request:", err);
-        res.status(500).send("Error processing the delete.");
-    }
-});
 
 module.exports = router;
