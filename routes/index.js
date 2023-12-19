@@ -9,7 +9,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/login', async(req, res)=>{
-  res.render('login');
+  res.render('login/login',{layout:"loginLayout"});
 });
 
 router.post('/login', async(req, res)=>{
@@ -20,14 +20,29 @@ router.post('/login', async(req, res)=>{
   if (isValidUser) { 
     res.redirect('/'); 
   } else {
-    res.render('login', { error: 'Invalid credentials' });
+    res.render('login/login', { error: 'Invalid credentials' });
   }
+});
+
+router.get('/forgot_password', async(req, res)=>{
+  res.render('login/forgot_password', {layout:"loginLayout"});
+});
+
+router.post('/forgot_password', async(req, res)=>{
+  res.redirect('/login');
+});
+
+router.get('/register', async(req, res)=>{
+  res.render('login/register', {layout:"loginLayout"});
+});
+
+router.get('/register', async(req, res)=>{
+  res.redirect('/login');
 });
 
 router.get('/logout', (req, res) => {
   req.session.isLoggedIn = false; 
   res.redirect('/login');
 });
-
 
 module.exports = router;

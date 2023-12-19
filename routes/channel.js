@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-
 /* 
 채팅방 목록
 - http://localhost:3001/channel/list
