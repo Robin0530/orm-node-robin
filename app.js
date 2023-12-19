@@ -35,6 +35,7 @@ app.use('/articles', articlesRouter);
 app.use('/channel', channelRouter);
 app.use('/member', memberRouter);
 app.use('/message', messageRouter);
+app.use('/admin', adminRouter);
 
 app.use(session({
   secret: 'lee',  
