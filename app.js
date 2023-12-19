@@ -12,6 +12,9 @@ var channelRouter = require('./routes/channel');
 var messageRouter = require('./routes/message');
 var adminRouter = require('./routes/admin');
 
+var channelRouter = require('./routes/channel');
+var messageRouter = require('./routes/message');
+
 var app = express();
 
 // view engine setup
@@ -38,6 +41,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: 'auto' }  
 }));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
