@@ -6,16 +6,41 @@ const path = require('path');
 const fs = require('fs').promises;
 const DB_path = path.join(__dirname, '../DB/articleDB.json');
 
+
+var searchOption = {
+    boardTypeCode:0, 
+    title:"",
+    isDisplayCode:9
+};
+
 router.get('/list', async(req, res)=>{
     try {
         const data = await fs.readFile(DB_path, 'utf8');
         const articles = JSON.parse(data).articles;
-        res.render('articles/list',{articles});
+        res.render('articles/list',{articles, searchOption});
     } catch (err) {
         console.error("Error reading the file:", err);
         res.status(500).send("Error reading the user data.");
     }
     
+});
+
+router.post('/list', async(req, res)=>{
+    const { boardTypeCode, title, isDisplayCode } = req.body;
+
+    const data = await fs.readFile(DB_path, 'utf8');
+    let articles = JSON.parse(data).articles;
+
+    articles = articles.filter(article => {
+        const matchesType = boardTypeCode == 0 || article.board_type == boardTypeCode;
+        const matchesTitle = title == '' || article.title.includes(title);
+        const matchesDisplay = isDisplayCode == 0 ? article.display == 0 : true;
+
+        return matchesType && matchesTitle && matchesDisplay;
+    });
+
+    const searchOption = { boardTypeCode, title, isDisplayCode }; 
+    res.render('articles/list', { articles, searchOption });
 });
 
 router.get('/create',async(req,res)=>{

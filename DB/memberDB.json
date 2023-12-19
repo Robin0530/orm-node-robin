@@ -25,12 +25,6 @@
       "email": "user4@example.com"
     },
     {
-      "id": 5,
-      "username": "user5",
-      "password": "qwerty",
-      "email": "user5@example.com"
-    },
-    {
       "id": 6,
       "password": "0000",
       "username": "carlos",
@@ -41,6 +35,18 @@
       "password": "0000",
       "username": "juan",
       "email": "juan@gmail.com"
+    },
+    {
+      "id": 8,
+      "password": "0000",
+      "username": "test",
+      "email": "test@main.com"
+    },
+    {
+      "id": 9,
+      "password": "0000",
+      "username": "5th person",
+      "email": "fifth@gmail.com"
     }
   ]
 }
