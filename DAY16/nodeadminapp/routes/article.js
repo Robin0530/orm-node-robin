@@ -41,7 +41,7 @@ router.get('/list', async(req, res) => {
       registMemberId: "robin",
   },
   ]  
-  res.render('article/list', {articles});
+  res.render('article/list', {articles, currentUrl: '/article/list'});
 
 });
 
@@ -52,7 +52,7 @@ router.get('/list', async(req, res) => {
 - get
 */
 router.get('/create', async(req, res) => {
-  res.render('article/create');
+  res.render('article/create', {currentUrl: '/article/list'});
 });
 
 
@@ -73,7 +73,7 @@ router.post('/create', async(req, res) => {
 - get
 */
 router.get('/modify', async(req, res) => {
-  res.render('article/modify');
+  res.render('article/modify', {currentUrl: '/article/list'});
 });
 
 
@@ -90,7 +90,7 @@ router.post('/modify', async(req, res) => {
 */
 router.get('/delete', async(req, res) => {
   // 삭제 처리 로직
-  res.redirect('/article/list');
+  res.redirect('/article/list', {currentUrl: '/article/list'});
 });
 
 

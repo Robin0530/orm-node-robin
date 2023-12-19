@@ -40,18 +40,13 @@ router.get('/list', async(req, res) => {
             registMemberId: "robin",
         },
     ]  
-    res.render('channel/list', {channels});
+    res.render('channel/list', {channels, currentUrl:'/channel/list'});
 });
-
-router.get('/form_post', async(req, res)=> {
-    res.render('channel/form_post');
-
-})
 
 
 
 router.get('/create', async(req, res) => {
-    res.render('channel/create');
+    res.render('channel/create', {currentUrl:'/channel/list'});
 });
 
 
@@ -64,7 +59,7 @@ router.post('/create', async(req, res) => {
 
 
 router.get('/modify', async(req, res) => {
-    res.render('channel/modify');
+    res.render('channel/modify', {currentUrl:'/channel/list'});
 });
 
 
@@ -78,7 +73,7 @@ router.post('/modify', async(req, res) => {
 
 router.get('/delete', async(req, res) => {
 
-    res.redirect('/channel/list');
+    res.redirect('/channel/list', {currentUrl:'/channel/list'});
 });
 
 module.exports = router;

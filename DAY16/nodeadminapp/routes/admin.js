@@ -8,7 +8,7 @@ var router = express.Router();
 - get
 */
 router.get('/list', async(req, res, next) => {
-    res.render('admin/list.ejs')
+    res.render('admin/list.ejs', {currentUrl: '/admin/list'});
 });
 
 
@@ -18,7 +18,7 @@ router.get('/list', async(req, res, next) => {
 - get
 */
 router.get('/create', async(req, res)=> {
-    res.render('admin/create.ejs')
+    res.render('admin/create.ejs', {currentUrl: '/admin/list'});
 });
 
 
@@ -39,7 +39,7 @@ router.post('/create', async(req, res) => {
 - get
 */
 router.get('/modify', async(req, res) => {
-    res.render('admin/modify');
+    res.render('admin/modify', {currentUrl: '/admin/list'});
 });
 
 
@@ -58,7 +58,7 @@ router.post('/modify', async(req, res) => {
 */
 router.get('/delete', async(req, res) => {
 
-    res.redirect('/admin/list');
+    res.redirect('/admin/list', {currentUrl: '/admin/list'});
 });
 
 

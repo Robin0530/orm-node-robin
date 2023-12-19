@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* 관리자 사이트 메인-대시보드*/
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', {currentUrl:'/'});
 });
 
 /* 
