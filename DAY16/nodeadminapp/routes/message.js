@@ -34,7 +34,7 @@ router.post('/modify', async(req, res) => {
 
 router.get('/delete', async(req, res) => {
   // 삭제 처리 로직
-    res.redirect('/message/list', {currentUrl:'/message/list'});
+    res.redirect('/message/list');
 });
 
 module.exports = router;

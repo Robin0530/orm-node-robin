@@ -90,7 +90,7 @@ router.post('/modify', async(req, res) => {
 */
 router.get('/delete', async(req, res) => {
   // 삭제 처리 로직
-  res.redirect('/article/list', {currentUrl: '/article/list'});
+  res.redirect('/article/list');
 });
 
 

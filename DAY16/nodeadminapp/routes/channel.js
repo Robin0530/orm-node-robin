@@ -73,7 +73,7 @@ router.post('/modify', async(req, res) => {
 
 router.get('/delete', async(req, res) => {
 
-    res.redirect('/channel/list', {currentUrl:'/channel/list'});
+    res.redirect('/channel/list');
 });
 
 module.exports = router;

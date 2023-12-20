@@ -1,75 +1,172 @@
-    <!--우측 상단 헤더 영역 -->
+
+    <!--우측 콘텐츠 헤더영역 -->
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
             <h2>채널정보 등록</h2>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="/Home/Index">홈 </a>/
+                <li>
+                    <a href="/">Home</a> >
                 </li>
                 <li>
-                    <a>채널정보 </a>/
+                    <a>채널정보</a> >
                 </li>
-                <li class="breadcrumb-item active">
-                    <strong>등록</strong>
+                <li class="active">
+                    <strong>신규등록</strong>
                 </li>
             </ol>
+        </div>
+        <div class="col-lg-2">
+
         </div>
     </div>
 
     <!--우측 콘텐츠 영역 -->
-    <div class="wrapper wrapper-content animated fadeInUp">
-        <div class="row">
-            <div class="col-lg-12">
+    <form action="/channel/create" id="channelForm" method="post">
+        <div class="wrapper wrapper-content">
+            <div class="ibox-content m-b-sm border-bottom">
+                
+                <!-- 게시판유형 -->
+                <!-- <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">게시판</label>
+                            <select name="boardTypeCode" id="boardTypeCode" class="form-control">
+                                <option value="0">선택</option>
+                                <option value="1">공지게시판</option>
+                                <option value="2">기슬블로깅</option>
+                            </select>
+                        </div>
+                    </div>
+                </div> -->
 
-                <div class="ibox">
-                    <div class="ibox-content">
-                        <h2>채팅메시지 생성</h2>
-                        <form action="/channel/create">
-                            <div class="form-group">
-                                <label class="col-form-label">제목</label>
-                                <input type="text" id="title" name="title" value="" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label class="col-form-label">내용</label>
-                                <textarea name="contents" rows="20" cols="10" style="width: 100%;"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-form-label">작성자</label>
-                                <input type="text" id="register" name="register" value="" class="form-control">
-                            </div>
-                            <input type="submit" class="btn-white btn btn-x" value="저장">
-                        </form>
+                <!-- 채널명영역 -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">채널명</label>
+                            <input type="text" name="channel_name" id="channel_name" class="form-control">
+                        </div>
                     </div>
                 </div>
+
+                <!-- 채널소개 입력영역 -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">채널소개</label>
+                            <textarea class="form-control" name="user_limit" id="user_limit" rows="10" cols="5"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 대표이미지 -->
+                
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="input-group form-group">
+                            <div class="custom-file">
+                                <input id="inputGroupFile01" type="file" class="custom-file-input">
+                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 채널오픈상태, 작성자명 입력영역 -->
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">채널오픈상태</label>
+                            <select name="channel_state_code" id="channel_state_code" class="form-control">
+                                <option value="9">선택</option>
+                                <option value="1">Y</option>
+                                <option value="0">N</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">등록자명</label>
+                            <input type="text" name="reg_member_id" id="reg_member_id" class="form-control">
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 저장/목록이동 버튼 -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">저장</button>
+                    <a href="/channel/list" class="btn btn-info">목록</a>
+                </div>
+
             </div>
         </div>
-    </div>
+    </form>
 
+    
     <script>
-        $(document).ready(function(){
 
-            $('#loading-example-btn').click(function () {
-                btn = $(this);
-                simpleLoad(btn, true)
+    // 서버에서 보내준 html 웹페이지가 사용자 웹브라우저에
+    // 모두 렌더링이 완료된 시점에 발생 $(document).ready();
 
-                // Ajax example
-//                $.ajax().always(function () {
-//                    simpleLoad($(this), false)
-//                });
+    $(document).ready(function(){
+        $("#boardTypeCode").focus();
+        // alert("게시글 등록페이지가 렌더링 완료되었습니다.");
+        console.log("게시글 등록 웹페이지가 웹브라우저에 모두 렌더링 되었습니다.")
+    })
 
-                simpleLoad(btn, false)
-            });
-        });
+    // form태그내 사용자가 입력한 데이터 유효성검사(Validation Check)함수 구현
+    $("#channelForm").submit(function(){
 
-        function simpleLoad(btn, state) {
-            if (state) {
-                btn.children().addClass('fa-spin');
-                btn.contents().last().replaceWith(" Loading");
-            } else {
-                setTimeout(function () {
-                    btn.children().removeClass('fa-spin');
-                    btn.contents().last().replaceWith(" Refresh");
-                }, 2000);
-            }
+        // 클라이언트 자바스크립트 디버거 직접(코드상에) 설정하기
+        // debugger;
+
+        console.log("게시판유형 선택코드:", $("#boardTypeCode").val());
+
+        // 게시판 유형값 선택여부 체크
+        if($("#boardTypeCode").val()=="0"){
+            alert("게시판 유형을 선택해주세요.");
+            $("#boardTypeCode").focus();
+            return false;
         }
+
+        // 제목 입력요소 유효성 검사
+        if($("#title").val()==""){
+            alert("제목을 선택해주세요.");
+            $("#title").focus();
+            return false;
+        }
+
+        // 게시글유형
+        if($("#articleTypeCode").val()=="0"){
+            alert("게시글 유형을 선택해주세요.");
+            $("#articleTypeCode").focus();
+            return false;
+        }
+
+        // 게시여부
+        if($("#isDisplayCode").val()=="9"){
+            alert("게시여부를 선택해주세요.");
+            $("#isDisplayCode").focus();
+            return false;
+        }
+
+        // 작성자명
+        if($("#register").val()==""){
+            alert("작성자명을 선택해주세요.");
+            $("#register").focus();
+            return false;
+        }
+
+        // 최종 웹브라우저에서 서버로 데이터를 전송하기전에 클라이언트 디버깅을 걸어보자..
+        // debugger;
+
+        return true;
+    });
+
+    $(document).ready(function () {
+        bsCustomFileInput.init()
+    });
+
     </script>
