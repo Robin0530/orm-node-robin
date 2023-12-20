@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-// var expressLayouts = require('express-ejs-layouts');
+var expressLayouts = require('express-ejs-layouts');
 
 var indexRouter = require('./routes/index');
 var channelRouter = require('./routes/channel');
@@ -17,11 +17,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 
-// app.set('layout', 'layout');
-// app.set("layout extractScripts", true); 
-// app.set("layout extractStyles", true); 
-// app.set("layout extractMetas", true); 
-// app.use(expressLayouts);
+app.set('authLayout', 'authLayout');
+app.set("authLayout extractScripts", true); 
+app.set("authLayout extractStyles", true); 
+app.set("authLayout extractMetas", true); 
+app.use(expressLayouts);
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -30,7 +30,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/channel', channelRouter);
+app.use('/chat', channelRouter);
 app.use('/api/channel', channelAPIRouter);
 app.use('/api/member', memberAPIRouter);
 

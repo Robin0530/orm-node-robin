@@ -1,19 +1,13 @@
 var express = require('express');
 var router = express.Router();
 
-// 메인쓰
-router.get('/', async(req, res, next)=> {
-  res.render('index', { layout: false });
-});
-
-
 /* 
 로그인 웹페이지 요청 및 응답 
 - http://localhost:3000/login
 - get
 */
-router.get('/login', async(req, res, next)=> {
-  res.render('login', { layout: false });
+router.get('/', async(req, res, next)=> {
+  res.render('login', {layout:"authLayout"});
 });
 
 
@@ -22,8 +16,17 @@ router.get('/login', async(req, res, next)=> {
 - http://localhost:3000/login
 - get
 */
-router.post('/login', async(req, res, next)=> {
-  res.redirect('/');
+router.post('/', async(req, res, next)=> {
+
+  var email = req.body.email;
+  var password = req.body.member_password;
+
+  user = {
+    email: email,
+    member_password: password
+  };
+
+  res.redirect('/chat');
 });
 
 
@@ -34,7 +37,7 @@ router.post('/login', async(req, res, next)=> {
 - get
 */
 router.get('/entry', async(req, res, next)=> {
-  res.render('entry');
+  res.render('entry',{layout:"authLayout"});
 });
 
 
@@ -44,7 +47,7 @@ router.get('/entry', async(req, res, next)=> {
 - post
 */
 router.post('/entry', async(req, res, next)=> {
-  res.redirect('/login');
+  res.redirect('/');
 });
 
 
@@ -57,7 +60,7 @@ router.post('/entry', async(req, res, next)=> {
 - get
 */
 router.get('/find', async(req, res, next)=> {
-  res.render('find');
+  res.render('find',{layout:"authLayout"});
 });
 
 
@@ -67,12 +70,12 @@ router.get('/find', async(req, res, next)=> {
 - post
 */
 router.post('/find', async(req, res, next)=> {
-  res.redirect('/login'); 
+  res.redirect('/'); 
 });
 
 
-router.get('/chat', async(req,res)=> {
-  res.render('chat');
-})
+// router.get('/chat', async(req,res)=> {
+//   res.render('chat/index');
+// })
 
 module.exports = router;

@@ -7,7 +7,7 @@ var router = express.Router();
 - http://localhost:3000/chat
 - get
 */
-router.get('/chat', async(req, res, next)=> {
+router.get('/', async(req, res, next)=> {
 
     var channel = [
         {
@@ -41,7 +41,7 @@ router.get('/chat', async(req, res, next)=> {
             registMemberId: "robin",
         },
     ]
-    res.render('chat/index', { channel: channel });
+    res.render('chat/index', { channel: channel, layout:false });
 });
 
 module.exports = router;
