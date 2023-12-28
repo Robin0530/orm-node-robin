@@ -1,0 +1,123 @@
+    <!--우측 상단 헤더 영역 -->
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>게시글정보 관리</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/">홈</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a>게시글정보</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <strong>조회</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2">
+
+        </div>
+    </div>
+
+    <!--우측 콘텐츠 영역 -->
+    <div class="wrapper wrapper-content animated fadeInRight ecommerce">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>신규 채널정보 등록</h5>
+                <div class="ibox-tools">
+                    <a href="/article/create" class="btn btn-primary btn-xs">게시글 신규등록</a>
+                </div>
+            </div>
+            <div class="ibox-content m-b-sm border-bottom">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-form-label" for="product_name">Product Name</label>
+                            <input type="text" id="product_name" name="product_name" value="" placeholder="Product Name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="col-form-label" for="price">Price</label>
+                            <input type="text" id="price" name="price" value="" placeholder="Price" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="col-form-label" for="quantity">Quantity</label>
+                            <input type="text" id="quantity" name="quantity" value="" placeholder="Quantity" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-form-label" for="status">Status</label>
+                            <select name="status" id="status" class="form-control" style="height:calc(1.5em + .75rem + 2px)">
+                                <option value="1" selected>Enabled</option>
+                                <option value="0">Disabled</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox">
+                    <div class="ibox-content">
+
+                        <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                            <thead style="text-align: center;">
+                                <tr>
+                                    <th data-toggle="true">순번</th>
+                                    <th data-hide="phone">게시글유형</th>
+                                    <th data-hide="phone">제목</th>
+                                    <th data-hide="phone,tablet">글내용</th>
+                                    <th data-hide="phone">IP주소</th>
+                                    <th data-hide="phone">게시여부</th>
+                                    <th data-hide="phone">등록아이디</th>
+                                    <th data-hide="phone">등록일시</th>
+                                    <th data-sort-ignore="true">설정</th>
+                                </tr>
+                            </thead>
+                            <tbody style="text-align: center;">
+                                <tr>
+                                    <td name="articleIdx">1</td>
+                                    <td name="article_type_code">공지게시판</td>
+                                    <td name="title">공지입니다.</td>
+                                    <td name="contents">당일 수업내용 관련 공지드립니다.</td>
+                                    <td name="ip_address">192.168.0.1</td>
+                                    <td name="is_display_code">
+                                        <span class="label label-primary">Y</span>
+                                    </td>
+                                    <td name="reg_member_id">Robin</td>
+                                    <td name="reg_date">2023-12-20</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="/article/modify"><button class="btn-white btn btn-xs">수정</button></a>
+                                            <a href="/article/delete"><button class="btn-white btn btn-xs">삭제</button></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Page-Level Scripts -->
+    <script>
+        $(document).ready(function() {
+
+            $('.footable').footable();
+
+        });
+
+    </script>
