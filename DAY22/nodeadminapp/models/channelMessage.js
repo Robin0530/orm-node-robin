@@ -28,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
             msg_type_code: {
                 type: DataTypes.TINYINT,
                 allowNull: false,
-                comment: '로깅유형코드',
+                comment: '로깅유형코드 1:입장, 0:퇴장, 3:일반메시지, 4:파일메시지형코드',
             },
             connection_id: {
                 type: DataTypes.STRING(100),
