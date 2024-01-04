@@ -45,13 +45,13 @@ router.get('/list', async(req, res) => {
             registMemberId: "robin",
         },
     ]  
-    res.render('channel/list', {channels, currentUrl:'/channel/list'});
+    res.render('channel/list');
 });
 
 
 
 router.get('/create', async(req, res) => {
-    res.render('channel/create', {currentUrl:'/channel/list'});
+    res.render('channel/create');
 });
 
 
@@ -64,7 +64,7 @@ router.post('/create', async(req, res) => {
 
 
 router.get('/modify', async(req, res) => {
-    res.render('channel/modify', {currentUrl:'/channel/list'});
+    res.render('channel/modify');
 });
 
 

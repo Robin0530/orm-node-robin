@@ -24,6 +24,7 @@ db.Admin = require('./admin.js')(sequelize,Sequelize);
 db.Channel = require('./channel.js')(sequelize,Sequelize);
 db.ChannelMember = require('./channelMember.js')(sequelize,Sequelize);
 db.Article = require('./article.js')(sequelize,Sequelize);
+db.channelMessage = require('./channelMessage.js')(sequelize,Sequelize);
 
 //db객체 외부로 노출하기
 module.exports = db;

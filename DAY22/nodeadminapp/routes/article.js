@@ -46,7 +46,7 @@ router.get('/list', async(req, res) => {
       registMemberId: "robin",
   },
   ]  
-  res.render('article/list', {articles, currentUrl: '/article/list'});
+  res.render('article/list', {articles});
 
 });
 
@@ -57,7 +57,7 @@ router.get('/list', async(req, res) => {
 - get
 */
 router.get('/create', async(req, res) => {
-  res.render('article/create', {currentUrl: '/article/list'});
+  res.render('article/create');
 });
 
 
@@ -78,7 +78,7 @@ router.post('/create', async(req, res) => {
 - get
 */
 router.get('/modify', async(req, res) => {
-  res.render('article/modify', {currentUrl: '/article/list'});
+  res.render('article/modify');
 });
 
 

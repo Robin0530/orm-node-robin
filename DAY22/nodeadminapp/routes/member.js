@@ -9,13 +9,13 @@ const Op = db.sequelize.Op;
 
 
 router.get('/list', async(req, res) => {
-    res.render('member/list', {currentUrl:'/member/list'});
+    res.render('member/list');
 });
 
 
 
 router.get('/create', async(req, res) => {
-    res.render('member/create', {currentUrl:'/member/list'});
+    res.render('member/create');
 });
 
 
@@ -28,7 +28,7 @@ res .redirect('/member/list');
 
 
 router.get('/modify', async(req, res) => {
-    res.render('member/modify', {currentUrl:'/member/list'});
+    res.render('member/modify');
 });
 
 

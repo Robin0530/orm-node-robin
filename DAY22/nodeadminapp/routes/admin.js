@@ -29,7 +29,7 @@ router.get('/list', async (req, res, next) => {
         }
     )
 
-    res.render('admin/list.ejs', { admins, option, currentUrl: '/admin/list'});
+    res.render('admin/list.ejs', { admins, option});
 });
 
 /* 
@@ -38,7 +38,7 @@ router.get('/list', async (req, res, next) => {
 - get
 */
 router.get('/create', async (req, res) => {
-    res.render('admin/create.ejs', { currentUrl: '/admin/list' });
+    res.render('admin/create.ejs');
 });
 
 /* 
@@ -57,7 +57,7 @@ router.post('/create', async (req, res) => {
 - get
 */
 router.get('/modify', async (req, res) => {
-    res.render('admin/modify', { currentUrl: '/admin/list' });
+    res.render('admin/modify');
 });
 
 router.post('/modify', async (req, res) => {
