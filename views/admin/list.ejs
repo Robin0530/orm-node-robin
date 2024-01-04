@@ -1,0 +1,120 @@
+    <!--우측 상단 헤더 영역 -->
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>관리자계정 관리</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/">홈</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a>관리자계정 관리</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <strong>조회</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <!--우측 콘텐츠 영역 -->
+    <div class="wrapper wrapper-content animated fadeInRight ecommerce">
+        <!-- 사용자 정보 조회 옵션 및 조회 영역 -->
+        <form action="/admin/list" method="post">
+            <div class="ibox-content m-b-sm border-bottom">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label" for="OrderNo">메일주소</label>
+                            <input type="text" name="email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label" for="OrderName">이름</label>
+                            <input type="text" name="admin_name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label" for="MobileNo">전화번호</label>
+                            <input type="text" name="telephone" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">조회</button>
+                    <a href="/admin/create" class="btn btn-info">신규</a>
+                </div>
+            </div>
+        </form>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                        <thead>
+                            <tr>
+                                <th>순번</th>
+                                    <th data-hide="phone" name="admin_name">관리자명</th>
+                                    <th data-hide="phone" name="admin_id">아이디</th>
+                                    <th data-hide="phone" name="email">이메일</th>
+                                    <th data-hide="phone" name="telephone">전화번호</th>
+                                    <th data-hide="phone" name="dept_name">부서명</th>
+                                    <th data-hide="phone" name="reg_date">등록일시</th>
+                                    <th class="text-center">설정</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for(var i =0; i < admins.length; i++) { %>
+                                <tr>
+                                    <td><%=admins[i].admin_member_id%></a></td>
+                                    <td><%=admins[i].admin_name%></td>
+                                    <td><%=admins[i].admin_id%></td>
+                                    <td><%=admins[i].email%></td>
+                                    <td><%=admins[i].telephone%></td>
+                                    <td><%=admins[i].dept_name%></td>
+                                    <td><%=moment(admins[i].reg_date).format('YYYY-MM-DD HH:mm')%></td>
+                                    <td class="text-center">
+                                        <div class="btn-group">
+                                            <a href="/admin/modify/<%=admins[i].admin_member_id%>"><button class="btn-white btn btn-xs">수정</button></a>
+                                            <a href="/admin/delete/<%=admins[i].admin_member_id%>"><button class="btn-white btn btn-xs" id="btnDelete">삭제</button></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <% } %>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="7">
+                                        <ul class="pagination float-right"></ul>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('.footable').footable();
+
+            $('#date_added').datepicker({
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: true,
+                autoclose: true
+            });
+
+            $('#date_modified').datepicker({
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: true,
+                autoclose: true
+            });
+        });
+    </script>
