@@ -1,0 +1,165 @@
+    <!-- Settings Tab -->
+    <div class="tab-pane fade" id="tab-settings" role="tabpanel" aria-labelledby="settings-tab">
+        
+        <!-- Tab content header start -->
+        <div class="tab-pane-header">
+            Settings
+        </div>
+        <!-- Tab content header end -->
+
+        <!-- Account settings start -->
+        <div class="account-settings">
+
+            <!-- Account Settings Container Start -->
+            <div class="account-settings-container">
+
+                <div class="accordion" id="settingsAccordion">
+                    <div class="account-settings-block">
+                        <div class="account-settings-header" id="generalInfo">
+                            <button class="btn" type="button" data-toggle="collapse" data-target="#generalInfoCollapse" aria-expanded="true" aria-controls="generalInfoCollapse">
+                                General Info
+                                <div class="toggle-arrow"></div>
+                            </button>
+                        </div>
+                        <div id="generalInfoCollapse" class="collapse show" aria-labelledby="generalInfo" data-parent="#settingsAccordion">
+
+                            <div class="account-settings-body">
+
+                                <div class="upload-profile">
+
+                                    <div class="upload-profile-image">
+                                        <img src="img/user2.png" alt="Profile Image">
+                                    </div>
+                                    <div class="field-wrapper">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="uploadProfile">
+                                            <label class="custom-file-label" for="uploadProfile">Choose file</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="field-wrapper">
+                                    <input type="text" value="Jeivxezer Lopexz" />
+                                    <div class="field-placeholder">Full Name</div>
+                                </div>
+
+                                <div class="field-wrapper">
+                                    <input type="email" value="jeivxezer-lopexz@email.com" />
+                                    <div class="field-placeholder">Email</div>
+                                </div>
+
+                                <div class="field-wrapper m-0">
+                                    <input type="text" value="0 0000 00000" />
+                                    <div class="field-placeholder">Contact</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="account-settings-block">
+                        <div class="account-settings-header" id="changePwd">
+                            <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#changePwdCollapse" aria-expanded="false" aria-controls="changePwdCollapse">
+                                Change Password
+                                <div class="toggle-arrow"></div>
+                            </button>
+                        </div>
+                        <div id="changePwdCollapse" class="collapse" aria-labelledby="changePwd" data-parent="#settingsAccordion">
+
+                            <div class="account-settings-body">
+                                <div class="field-wrapper">
+                                    <input type="text" value="" />
+                                    <div class="field-placeholder">Current Password</div>
+                                </div>
+                                <div class="field-wrapper">
+                                    <input type="password" value="" />
+                                    <div class="field-placeholder">New Password</div>
+                                </div>
+                                <div class="field-wrapper m-0">
+                                    <input type="password" value="" />
+                                    <div class="field-placeholder">Confirm Password</div>
+                                </div>
+
+                                <div class="mt-3">
+                                    <button class="btn btn-primary btn-block">Change Password</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="account-settings-block">
+                        <div class="account-settings-header" id="notifications">
+                            <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#notificationsCollapse" aria-expanded="false" aria-controls="notificationsCollapse">
+                                Notifications
+                                <div class="toggle-arrow"></div>
+                            </button>
+                        </div>
+                        <div id="notificationsCollapse" class="collapse" aria-labelledby="notifications" data-parent="#settingsAccordion">
+                            <div class="account-settings-body">
+                                
+                                <div class="list-group m-0">
+                                    <div class="list-group-item">
+                                        <div class="custom-control custom-switch">
+                                            <div class="custom-switch-label">
+                                                Play sound on new messages
+                                            </div>
+                                            <div>
+                                                <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
+                                                <label class="custom-control-label" for="customSwitch1"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item">
+                                        <div class="custom-control custom-switch">
+                                            <div class="custom-switch-label">
+                                                Send desktop notifications
+                                            </div>
+                                            <div>
+                                                <input type="checkbox" class="custom-control-input" id="customSwitch2">
+                                                <label class="custom-control-label" for="customSwitch2"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item">
+                                        <div class="custom-control custom-switch">
+                                            <div class="custom-switch-label">
+                                                Show chat notifications
+                                            </div>
+                                            <div>
+                                                <input type="checkbox" class="custom-control-input" id="customSwitch3">
+                                                <label class="custom-control-label" for="customSwitch3"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item">
+                                        <div class="custom-control custom-switch">
+                                            <div class="custom-switch-label">
+                                                Last seen
+                                            </div>
+                                            <div>
+                                                <input type="checkbox" class="custom-control-input" id="customSwitch4">
+                                                <label class="custom-control-label" for="customSwitch4"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Account Settings Container End -->
+
+            <div class="save-btn-block">
+                <button class="btn btn-primary btn-block">Save Changes</button>
+            </div>
+
+        </div>
+        <!-- Account settings end -->							
+
+    </div>
+<script>
+    
+</script>
