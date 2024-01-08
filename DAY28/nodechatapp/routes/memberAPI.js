@@ -1,81 +1,166 @@
-const express = require('express');
-const fs = require('fs').promises;
-const path = require('path');
-const router = express.Router();
+// 회원 정보관리 RESTful API 전용 라우팅
+// http://localhost:3000/api/member
 
-const MEMBERS_FILE = path.join(__dirname, '../DB/members.json'); // Correct path
+var express = require('express');
+var router = express.Router();
 
-async function getMembersData() {
-    const data = await fs.readFile(MEMBERS_FILE, 'utf8');
-    return JSON.parse(data);
-}
+var Member = require('../schemas/member')
 
-router.get('/all', async (req, res) => {
+
+// Get all members
+router.get('/all', async(req, res, next)=>{
     try {
-        const members = await getMembersData();
+        var members = await Member.find();
         res.json(members);
-    } catch (error) {
-        res.status(500).json({ message: "Error retrieving members", error: error });
+    }catch(error) {
+        console.log(error);
+        res.json({ message: "Member not find", error: error });
     }
 });
 
-router.post('/create', async(req, res)=>{
-    var member_id = req.body.member_id;
-    var email = req.body.email
-    var name = req.body.name
-    var profile_img_path = req.body.profile_img_path
-    var telephone = req.body.telephone
-    var entry_type_code = req.body.entry_type_code
-    var use_state_code = req.body.use_state_code
-    var birth_date = req.body.birth_date
-    var reg_date = req.body.reg_date
-    var edit_date = req.body.edit_date
 
-    var member = {
-        member_id,
-        email,
-        name,
-        profile_img_path,
-        telephone,
-        entry_type_code,
-        use_state_code,
-        birth_date,
-        reg_date,
-        edit_date
+router.post('/login', async (req, res, next) => {
+    const { email, password } = req.body;
+
+    try {
+        const user = await Member.findOne({ email });
+
+        if (!user) {
+            return res.json({ message: "이메일이나 비밀번호가 올바르지 않습니다." });
+        }
+
+        if (password === user.member_password) {
+            // 로그인 성공
+            res.json({ message: "로그인 성공", user });
+        } else {
+            // 비밀번호 불일치
+            res.json({ message: "이메일이나 비밀번호가 올바르지 않습니다." });
+        }
+
+    } catch (error) {
+        console.log(error);
+        res.json({ message: "Member not Login", error });
+    }
+});
+
+// Create a new member
+router.post('/entry', async(req, res, next)=>{
+
+    var memberData = {
+        email: req.body.email,
+        member_password: req.body.password,
+        name: req.body.name,
+        telephone: req.body.telephone,
+        entry_type_code: 1,
+        use_state_code: 1,
+        profile_img_path: req.body.profileImgPath,
+        birth_date: req.body.birthDate,
+        reg_date: Date.now(),
+        reg_member_id: 1,
+        edit_date: Date.now()
     };
 
     try {
-        const members = await getMembersData();
-        members.push(member);
-        await fs.writeFile(MEMBERS_FILE, JSON.stringify(members, null, 2), 'utf8');
-        res.json({ message: "Member created successfully", member: member });
-    } catch (error) {
-        res.status(500).json({ message: "Error saving the member", error: error });
-    }
-});
+        var regEmail = await Member.findOne({email:memberData.email});
 
-router.post('/modify', async(req, res)=>{
-    res.json({ message: "Member modified" });
-});
-
-router.post('/delete', async(req, res)=>{
-    res.json({ message: "Member deleted" });
-});
-
-router.get('/:mid', async (req, res) => {
-    try {
-        const memberId = parseInt(req.params.mid, 10);
-        const members = await getMembersData();
-        const member = members.find(m => m.member_id === memberId); 
-
-        if (member) {
-            res.json(member);
+        if(!regEmail) {
+            // 이미 가입된 이메일이 없으면 회원가입 진행
+            await Member.create(memberData);
+            console.log('회원가입완료');
+            res.json({ message: "member created" });
         } else {
-            res.status(404).json({ message: "Member not found" });
+            console.log('이미 가입된 메일입니다.');
         }
-    } catch (error) {
-        res.status(500).json({ message: "Error retrieving the member", error: error });
+
+    }catch(error) {
+        console.log(error);
+        res.json({ message: "Member not create", error: error });
     }
+});
+
+// find member
+// nodemailer 사용해보기
+router.post('/find', async (req, res, next) => {
+    const emailData = req.body.email;
+
+    try {
+        // trim: 문자열의 양 끝에 있는 공백(스페이스, 탭, 줄바꿈)을 제거하는 JavaScript의 문자열 메소드
+        if (!emailData || emailData.trim() === "") {
+            console.log('이메일을 입력해주세요');
+            return res.status(400).json({ message: "이메일을 입력해주세요" });
+        }
+
+        const findEmail = await Member.findOne({ email: emailData });
+
+        if (findEmail) {
+            res.json({ message: "Member found", member: findEmail });
+        } else {
+            res.json({ message: "Member not found" });
+        }
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Member not found", error: error });
+    }
+});
+
+// Modify an existing member
+router.post('/modify', async (req, res, next) => {
+
+    const memberId = req.body.member_id;
+
+    var memberData = {
+        email: req.body.email,
+        member_password: req.body.password,
+        name: req.body.name,
+        telephone: req.body.telephone,
+        birth_date: req.body.birthDate,
+        edit_date: Date.now(),
+        edit_member_id: 1
+    };
+
+    // members.updateOne({ member_id: 4 }, { '$set': { edit_member_id: 1, edit_date: new Date("Mon, 08 Jan 2024 06:53:25 GMT"), telephone: '010-2222-3333', name: '이름수정하기', email: 'bbb1111@naver.com' }}, {})
+
+    try {
+        var result = await Member.updateOne({member_id:memberId}, memberData);
+        res.json(result);
+        console.log(result, '수정완료');
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Member not updated", error: error });
+    }
+});
+
+// Delete a member
+router.post('/delete', async(req, res) =>{
+
+    const memberId = req.body.member_id;
+
+    try {
+        var result = await Member.deleteOne({member_id: memberId});
+        res.json(result);
+        console.log(result, "삭제완료");
+        
+    } catch(error) {
+        console.log(error);
+        res.status(500).json({ message: "Member not deleted", error: error });
+    }
+});
+
+
+// Get a single member by ID
+router.get('/:mid', async(req, res) =>{
+    var memberId = parseInt(req.params.mid, 10); // 10진수 정수로 변환
+
+    try{
+        var members = await Member.findOne({where:{member_id:memberId}});
+        res.json({members});
+    } catch(error) {
+        console.log(error);
+        res.status(500).json({ message: "Member not findOne", error: error });
+    }
+
 });
 
 module.exports = router;

@@ -26,7 +26,7 @@ router.post('/', async(req, res, next)=> {
     member_password: password
   };
 
-  res.redirect('/channel');
+  res.redirect('/chat');
 });
 
 
