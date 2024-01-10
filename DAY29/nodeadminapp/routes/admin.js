@@ -70,7 +70,7 @@ router.post('/create', async(req, res, next)=> {
     var usedYnCode = req.body.usedYnCode;
     var dept_name = req.body.dept_name;
 
-    // 관리자 옴호화 해시알고리즘 기반 단방향 암호화 적용하기
+    // 관리자 암호화 해시알고리즘 기반 단방향 암호화 적용하기
     // bcrypt.hash('암호화할문자', 암호화변환횟수)
     var encryptedPassword = await bcrypt.hash(admin_password, 12);
 
