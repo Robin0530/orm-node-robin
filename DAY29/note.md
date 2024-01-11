@@ -62,3 +62,11 @@
   - RESTFul Data Backend Service
 
 * CORS 문제를 해결하려면 서버에서 클라이언트로 응답을 보낼때 응답헤더에 Accress-Control-Allow-Origin이라는 헤더를 넣어주어 RESTful 서비스 도메인과 다른 클라이언트의 주소에서의 요청을 허락하게 한다.
+
+<br>
+<br>
+---
+
+# AWS Cloud 특징
+* 서비스명 --- 서비스단위
+* EC2(가상서버)
