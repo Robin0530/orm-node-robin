@@ -6,6 +6,9 @@ var Op = db.Sequelize.Op;
 
 var bcrypt = require('bcryptjs');
 
+// jsonwebtoken 패키지 참조하기
+const jwt = require('jsonwebtoken');
+
 /* 임시메인- */
 router.get('/', async(req, res, next)=> {
   res.render('channel/chat.ejs',{layout:"baseLayout"});
@@ -103,6 +106,68 @@ router.get('/find', async(req, res, next)=> {
 /* 암호찾기 사용자 입력정보 처리 요청과 응답*/
 router.post('/find', async(req, res, next)=> {
   res.render('find.ejs',{email:"",result:"Ok"});
+});
+
+
+
+/* JWT토큰 생성 웹페이지 요청과 응답*/
+router.get('/maketoken', async(req, res, next)=> {
+
+  var token ="";
+
+  res.render('maketoken.ejs', {layout:false, token});
+});
+
+/*  JWT토큰 생성하고 토큰 확인하기 */
+router.post('/maketoken', async(req, res, next)=> {
+
+  var token ="";
+
+  // STEP1: JWT토큰에 담을 JSON데이터 구조 및 데이터 바인딩
+  // JWT토큰영역내 PayLoad영역에 담깁니다.
+  var jsonTokenData = {
+    userid: req.body.userid,
+    email: req.body.email,
+    usertype: req.body.usertype,
+    name: req.body.name,
+    telephone: req.body.telephone
+  };
+
+  // STEP2: JSON 데이터를 JWT 토큰으로 생성한다.
+  // jwt.sign('JSON데이터','토큰인증키', 옵션{expiresIn:'24h' 파기일지정,issuer:'robin' 만든회사});
+  // 파기일시 지정포맷: 30s, 60m, 24h, 200d 토큰생성일을 기준으로 해서 해당기간만큼만 유효함
+  token = await jwt.sign(jsonTokenData, process.env.JWT_SECRET, {expiresIn:'24h',issuer:'robin'});
+
+  res.render('maketoken.ejs',{layout:false, token});
+});
+
+
+/* 
+- JWT토큰값을 수신하여 토큰값을 해석하기
+- http://localhost:3000/readtoken?token=토큰값
+*/
+router.get('/readtoken', async(req, res, next)=> {
+
+  var token = req.query.token;
+  var tokenJsonData = {}
+
+  // 토큰의 유효성을 검사하고 JSON 데이터를 추출한다.
+  // await jwt.verify(JWT토큰문자열, 해당토큰생성시 사용한 JWT인증키값);
+
+  try{
+    tokenJsonData = await jwt.verify(token, process.env.JWT_SECRET);
+  } catch(err) {
+    tokenJsonData = {
+      userid: "",
+      email: "",
+      usertype: "",
+      name: "",
+      telephone: ""
+    };
+    token = "유효하지 않은 토큰입니다.";
+  }
+
+  res.render('readtoken.ejs', {layout:false, token, tokenJsonData});
 });
 
 
