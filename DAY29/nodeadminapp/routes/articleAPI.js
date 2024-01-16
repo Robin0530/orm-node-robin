@@ -5,30 +5,6 @@
 var express = require('express');
 var router = express.Router();
 
-// multer멀터 업로드 패키지 참조하기(첨부파일)
-var multer = require('multer');
-
-// S3전용 업로드 객체 참조하기
-var {upload} = require('../common/aws_s3');
-
-
-//파일저장위치 지정
-var storage  = multer.diskStorage({ 
-    destination(req, file, cb) {
-        cb(null, 'public/upload/');
-    },
-    filename(req, file, cb) {
-        // 저장되는 파일명
-        cb(null, `${moment(Date.now()).format('YYYYMMDDHHmm')}_${file.originalname}`);
-    },
-});
-
-//일반 업로드처리 객체 생성
-var simpleUpload = multer({ storage: storage });
-
-var moment = require('moment');
-
-
 //전체 게시글 목록 데이터 조회 반환 API 라우팅 메소드 
 //http://localhost:3000/api/article/all
 router.get('/all',async(req,res)=>{
@@ -226,81 +202,6 @@ router.post('/update',async(req,res)=>{
 
     res.json(apiResult);
 });
-
-
-// 단일 파일업로드 처리 RESTFul API 라우팅메소드
-// http://localhost:3000/api/article/upload
-// upload.single('html태그내 file 태그의 name명') ==> 
-// \public\frontend\create.html 파일안의 form 태그안에 name이 현재 files임
-router.post('/upload', simpleUpload.single('file'), async(req, res) =>{
-
-    //API라우팅 메소드 반환형식 정의 
-    var apiResult = {
-        code:200,
-        data:null,
-        result:"Ok"
-    };
-
-    try{
-        // STEP2.1: 업로드 파일정보 체크하기
-        const uploadFile = req.file;                    // input타입내의 name값
-        var filePath ="/upload/"+uploadFile.filename;   // 서버에 업로드된 실제 물리적 파일명-도메인 주소가 생략된 파일링크주소
-        var fileName = uploadFile.filename;             // 서버에 저장된 실제 물리파일명(파일명/확장자포함)
-        var fileOrignalName = uploadFile.originalname;  // 클라이언트에서 선택한 오리지널 파일명
-        var fileSize = uploadFile.size;                 // 파일크기(KB)
-        var fileType=uploadFile.mimetype;               // 파일포맷(타입)
-    
-        apiResult.code = 200;
-        apiResult.data = {filePath, fileName, fileOrignalName, fileSize, fileType};
-        apiResult.result = "OK";
-
-
-    }catch(err) {
-        apiResult.code = 500,
-        apiResult.data = {},
-        apiResult.result = "Failed"
-    }
-
-    res.json(apiResult);
-});
-
-
-// http://localhost:3000/api/article/uploadS3
-// 신규 게시글 사용자 등록정보 처리 요청 및 응답 라우팅메소드: S3에 파일업로드
-// upload.getUpload('upload/').fields([{ name: 'client파일태그명(name값)', maxCount: 1 }])
-router.post('/uploadS3', upload.getUpload('/').fields([{ name: 'file', maxCount: 1 }]), async(req, res) =>{
-
-    //API라우팅 메소드 반환형식 정의 
-    var apiResult = {
-        code:200,
-        data:null,
-        result:"Ok"
-    };
-
-    try{
-        // STEP2.1: 업로드 파일정보 체크하기
-        const uploadFile = req.files.file;                    // input타입내의 name값
-        var filePath ="/upload/"+uploadFile.filename;   // 서버에 업로드된 실제 물리적 파일명-도메인 주소가 생략된 파일링크주소
-        var fileName = uploadFile.filename;             // 서버에 저장된 실제 물리파일명(파일명/확장자포함)
-        var fileOrignalName = uploadFile.originalname;  // 클라이언트에서 선택한 오리지널 파일명
-        var fileSize = uploadFile.size;                 // 파일크기(KB)
-        var fileType=uploadFile.mimetype;               // 파일포맷(타입)
-    
-        apiResult.code = 200;
-        apiResult.data = {filePath, fileName, fileOrignalName, fileSize, fileType};
-        apiResult.result = "OK";
-
-
-    }catch(err) {
-        apiResult.code = 500,
-        apiResult.data = {},
-        apiResult.result = "Failed"
-    }
-
-    res.json(apiResult);
-});
-
-
 
 
 //단일 게시글 데이터 조회 반환 API 라우팅 메소드 

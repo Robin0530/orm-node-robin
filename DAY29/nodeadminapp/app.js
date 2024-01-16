@@ -8,13 +8,10 @@ var logger = require('morgan');
 // 호출위치는 반드시 app.js내 최상위에서 호출할 것.
 require('dotenv').config();
 
-// express기반 서버세션 관리 패키지 참조하기
-var session = require('express-session');
-
 
 var sequelize = require('./models/index').sequelize;
 
-// express-ejs-layouts 패키지 참조하기
+//express-ejs-layouts 패키지 참조하기
 var expressLayouts = require('express-ejs-layouts');
 
 
@@ -28,37 +25,19 @@ var articleAPIRouter = require('./routes/articleAPI');
 
 var app = express();
 
-// mysql과 자동연결처리 및 모델기반 물리 테이블 생성처리제공
+//mysql과 자동연결처리 및 모델기반 물리 테이블 생성처리제공
 sequelize.sync(); 
 
-
-// express기반 서버세션 관리 팩키지 참조하기 
-var session = require('express-session');
-
-
-// express-session기반 서버세션 설정 구성하기 
-app.use(
-  session({
-    resave: false,    // 매번 세션 강제 저장
-    saveUninitialized: true, 
-    secret: "testsecret", // 암호화할때 사용하는 salt값
-    cookie: {
-      httpOnly: true,
-      secure: false,
-      maxAge: 1000 * 60 * 20 // 20분동안 서버세션을 유지하겠다.(1000은 1초)
-    },
-  }),
-);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// 레이아웃 설정
-app.set('layout', 'layout.ejs');    // 해당 노드앱의 모든 (콘텐츠)뷰파일의 기본 레이아웃ejs파일 설정하기 
-app.set("layout extractScripts", true); // 콘텐츠페이지내 script태그를 레이아웃에 통합할지여부
-app.set("layout extractStyles", true);// 콘텐츠페이지내 style태그를 레이아웃에 통합할지여부
-app.set("layout extractMetas", true); // 콘텐츠페이지내 meta 태그를 레이아웃에 통합할지여부
+//레이아웃 설정
+app.set('layout', 'layout.ejs'); // 해당 노드앱의 모든 (콘텐츠)뷰파일의 기본 레이아웃ejs파일 설정하기 
+app.set("layout extractScripts", true);  //콘텐츠페이지내 script태그를 레이아웃에 통합할지여부
+app.set("layout extractStyles", true);//콘텐츠페이지내 style태그를 레이아웃에 통합할지여부
+app.set("layout extractMetas", true); //콘텐츠페이지내 meta 태그를 레이아웃에 통합할지여부
 app.use(expressLayouts);
 
 

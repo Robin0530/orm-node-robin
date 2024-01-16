@@ -7,12 +7,13 @@ const bcrypt = require('bcryptjs');
 // 양방향 암호화 알고리즘 패키지 참조하기
 const AES = require('mysql-aes');
 
+var moment = require('moment');
+
 var db = require('../models/index');
 
 var sequelize = db.sequelize;
 const { QueryTypes } = sequelize;
 
-var moment = require('moment');
 
 /* 
 기능: 관리자 계정 목록조회 웹페이지 요청
@@ -31,7 +32,7 @@ router.get('/list', async(req, res, next)=> {
     var sqlQuery =`SELECT company_code,admin_id,admin_password,admin_name,
     CONVERT(AES_DECRYPT(UNHEX(email), '${process.env.MYSQL_AES_KEY}')USING utf8) as email,
     CONVERT(AES_DECRYPT(UNHEX(telephone),'${process.env.MYSQL_AES_KEY}')USING utf8) as telephone,
-    dept_name,used_yn_code,reg_date,reg_member_id, edit_date 
+    dept_name,used_yn_code,reg_date,reg_member_id 
     FROM admin_member;`
 
     var admins = await sequelize.query(sqlQuery,{
@@ -70,7 +71,7 @@ router.post('/create', async(req, res, next)=> {
     var usedYnCode = req.body.usedYnCode;
     var dept_name = req.body.dept_name;
 
-    // 관리자 암호화 해시알고리즘 기반 단방향 암호화 적용하기
+    // 관리자 옴호화 해시알고리즘 기반 단방향 암호화 적용하기
     // bcrypt.hash('암호화할문자', 암호화변환횟수)
     var encryptedPassword = await bcrypt.hash(admin_password, 12);
 
@@ -113,20 +114,19 @@ router.get('/modify/:aid', async(req, res, next)=> {
     var admin =await db.Admin.findOne({where:{admin_member_id:aid}})
 
     // AES.decrypt('양방향 암호화된 DB')
-    admin.email = AES.decrypt(admin.email, process.env.MYSQL_AES_KEY);
-    admin.telephone = AES.decrypt(admin.telephone, process.env.MYSQL_AES_KEY);
+    admin.email = AES.dcrypt(admin.email, process.env.MYSQL_AES_KEY);
+    admin.telephone = AES.dcrypt(admin.telephone, process.env.MYSQL_AES_KEY);
 
     res.render('admin/modify.ejs', {admin});
 });
-
 
 
 /* 
 기능: 관리자 계정 등록처리 웹페이지 요청
 호출주소: http://localhost:3001/admin/modify
  */
-router.post('/modify/:aid', async(req, res, next)=> {
-    res.redirect('/admin/list');
+router.post('/modify/:id', async(req, res, next)=> {
+    res.redirect('/admin/modify');
 });
 
 
