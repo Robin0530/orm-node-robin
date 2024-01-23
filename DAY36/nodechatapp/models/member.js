@@ -43,13 +43,13 @@ module.exports = function (sequelize, DataTypes) {
           type: DataTypes.TINYINT,
           allowNull: false,
           comment: '이용상태 0:허용대기 1:사용중 2:탈퇴처리',
-       },
-       birth_date: {
-        type: DataTypes.STRING(6),
-        allowNull: true,
-        comment: '생년월일-740523',
-       },
-       reg_date: {
+        },
+        birth_date: {
+          type: DataTypes.STRING(6),
+          allowNull: true,
+          comment: '생년월일-740523',
+        },
+        reg_date: {
           type: DataTypes.DATE,
           allowNull: false,
           comment: '등록일시',
@@ -84,5 +84,5 @@ module.exports = function (sequelize, DataTypes) {
           },
         ],
       }
-     );
+    );
   };

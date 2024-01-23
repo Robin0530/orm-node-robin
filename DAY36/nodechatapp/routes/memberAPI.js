@@ -10,10 +10,12 @@ var db = require('../models/index.js');
 //사용자 토큰제공여부 체크 미들웨어 참조하기
 var {tokenAuthChecking} = require('./apiMiddleware.js');
 
+// 각종 열거형 상수 조회-코드성 데이터들은 열거형으로 사용
+var constants = require('../common/enum.js');
 
 /* 
--신규회원 가입처리 RESTFul API 라우팅 메소드 
--http://localhost:3000/api/member/entry
+- 신규회원 가입처리 RESTFul API 라우팅 메소드 
+- http://localhost:3000/api/member/entry
 */
 router.post('/entry', async(req, res, next)=> {
   var apiResult = {
@@ -81,8 +83,8 @@ router.post('/entry', async(req, res, next)=> {
 
 
 /* 
--회원 로그인 처리 RESTFul API 라우팅 메소드 
--http://localhost:3000/api/member/login
+- 회원 로그인 처리 RESTFul API 라우팅 메소드 
+- http://localhost:3000/api/member/login
 */
 router.post('/login', async(req, res, next)=> {
   var apiResult = {
@@ -152,8 +154,8 @@ router.post('/login', async(req, res, next)=> {
 
 
 /* 
--회원 암호 찾기 RESTFul API 라우팅 메소드 
--http://localhost:3000/api/member/find
+- 회원 암호 찾기 RESTFul API 라우팅 메소드 
+- http://localhost:3000/api/member/find
 */
 router.post('/find', async(req, res, next)=> {
   res.json({});
@@ -161,9 +163,9 @@ router.post('/find', async(req, res, next)=> {
 
 
 /* 
--로그인한 현재 사용자의 회원 기본정보 조회 API  
--http://localhost:3000/api/member/profile
--로그인시 발급한 JWT토큰은 HTTP Header영역에 포함되어 전달된다.
+- 로그인한 현재 사용자의 회원 기본정보 조회 API  
+- http://localhost:3000/api/member/profile
+- 로그인시 발급한 JWT토큰은 HTTP Header영역에 포함되어 전달된다.
 */
 router.get('/profile',tokenAuthChecking,async(req,res,next)=>{
 
@@ -206,6 +208,43 @@ router.get('/profile',tokenAuthChecking,async(req,res,next)=>{
 
 });
 
+
+/* 
+- 전체 회원목록 조회 API  
+- http://localhost:3000/api/member/all
+- 로그인시 발급한 JWT토큰은 HTTP Header영역에 포함되어 전달된다.
+*/
+router.get('/all', tokenAuthChecking, async(req, res, next) => {
+
+  var apiResult = {
+    code:400,
+    data:null,
+    msg:""
+  };
+
+  try{
+
+    var members = await db.Member.findAll({
+      attributes:['member_id','email','name','profile_img_path','telephone'],
+      // 이렇게 코드를 박아놓는건 좋지않음. 그래서 열거형으로 하나 만들어서 사용하기
+      // where:{use_state_code:1}
+      where:{use_state_code:constants.USE_STATE_CODE_USED}
+    });
+
+    apiResult.code = 200;
+    apiResult.data = members;
+    apiResult.msg = "Ok";
+
+
+  }catch(err) {
+    apiResult.code = 500;
+    apiResult.data = null;
+    apiResult.msg = "Failed";
+  }
+
+  res.json(apiResult);
+
+});
 
 
 

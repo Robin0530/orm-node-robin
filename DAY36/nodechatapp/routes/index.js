@@ -31,6 +31,7 @@ router.post('/entry', async(req, res, next)=> {
     var email= req.body.email;
     var password= req.body.password;
     var name= req.body.name;
+    var telephone= req.body.telephone;
 
     //사용자 암호 단뱡항 암호화 적용
     var ecryptedPassword = await bcrypt.hash(password,12);
@@ -41,11 +42,10 @@ router.post('/entry', async(req, res, next)=> {
       member_password:ecryptedPassword,
       name:name,
       profile_img_path:"",
-      telephone:"",
+      telephone:telephone,
       entry_type_code:0,
       use_state_code:1,
       reg_date:Date.now(),
-      reg_member_id:0
     };
 
     await db.Member.create(member);
