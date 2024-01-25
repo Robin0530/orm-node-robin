@@ -5,7 +5,7 @@
     </head>
     <body>
         <h1>프론트엔드 AJAX 파일업로드 샘플</h1>
-        <form>
+        <form class="dropzone" id="myDropzone">
 
             파일선택: <input type="file" name="file" id="file">
 
@@ -36,9 +36,7 @@
                     success:function(result) {
                         console.log("파일업로드 처리결과:", result);
                     }
-
                 });
-
             });
         </script>
     </body>
