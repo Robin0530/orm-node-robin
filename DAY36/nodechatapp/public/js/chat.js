@@ -56,11 +56,12 @@ $("#contacts-tab").click(function () {
   });
 });
 
-//선택 사용자별 채팅방 입장처리 함수
+// 선택 사용자별 채팅방 입장처리 함수
 function fnChatEntry(memberId, nickName, channelType) {
   console.log("채팅방 입장위한 선택 사용자 정보:", memberId, nickName);
 
-  //step1: 채팅방 입장처리하기
+  // 입장처리하는 json 정보 만들기
+  // step1: 채팅방 입장처리하기
   var channel = {
     channelType, //1:일대일채널,2:그룹채널
     channelId: 0, //0이면 일대일채널, 0이상이면 그룹채널 고유번호
@@ -69,7 +70,7 @@ function fnChatEntry(memberId, nickName, channelType) {
     targetNickName: nickName,
   };
 
-  //해당 채널 유형별 채팅방 입장하기
+  // 해당 채널 유형별 채팅방 입장하기
   socket.emit("entryChannel", channel);
 
   //step2: 채팅 화면 UI 표시하기
@@ -79,18 +80,18 @@ function fnChatEntry(memberId, nickName, channelType) {
   // $(this).addClass("active-chat");
 }
 
-//서버소켓으로 메시지 보내기
+// 서버소켓으로 메시지 보내기
 $("#btnSend").click(function () {
-  //임시로 현재 사용자 닉네임 사용-추후 토큰에서 정보 추출하기
-  //현재 접속한 채널 고유번호 조회
+  // 임시로 현재 사용자 닉네임 사용-추후 토큰에서 정보 추출하기
+  // 현재 접속한 채널 고유번호 조회
   var channelId = currentChannel.channel_id;
 
-  //현재 접속자 대화명 조회
+  // 현재 접속자 대화명 조회
   var memberId = currentUser.member_id;
   var nickName = currentUser.name;
   var profile = currentUser.profile_img_path;
 
-  //입력 메시지 조회
+  // 입력 메시지 조회
   var message = $("#txtMessage").val();
 
   //서버로 그룹 메시지 발송하기

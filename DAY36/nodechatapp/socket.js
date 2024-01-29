@@ -134,7 +134,15 @@ module.exports = (server) => {
           }
         } else {
           //그룹채널 정보조회
+
+
+
+
           //전달된 채널 고유번호로 조회해서 channelData에 할당하면 됩니다.
+
+
+
+
         }
 
         //step2: 현재 채팅방 접속자 정보 조회 및 정보 업데이트
@@ -166,13 +174,8 @@ module.exports = (server) => {
         );
 
         //채팅방에 나를 제외한 모든 채팅방 사용자에게 입장사실 메시지 알림
-        socket
-          .to(channelData.channel_id)
-          .emit(
-            "entryok",
-            `${currentUser.name}님이 채팅방에 입장했습니다`,
-            currentUser.name,
-            channelData
+        socket.to(channelData.channel_id).emit("entryok",`${currentUser.name}님이 채팅방에 입장했습니다`,
+            currentUser.name,channelData
           );
 
         //채팅방 입장 로그 기록 하기
@@ -190,6 +193,11 @@ module.exports = (server) => {
         socket.emit("entryok", `채널 접속오류가 발생했습니다.`);
       }
     });
+
+    // 그룹 채팅방 입장하기 - 01.25미션
+    // try/catch사용해서 에러 핸들링
+
+    
 
     //채팅방별 메시지 수발신 처리
     socket.on(
